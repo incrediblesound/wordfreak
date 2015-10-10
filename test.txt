@@ -1,0 +1,3 @@
+Hello, this is a test text
+It has a few lines so that the program
+can read each line and produce output
