@@ -90,7 +90,7 @@ Dictionary* getDictionary(Lines* text){
 		while(index <= current_line->length){
 
 			char* ch = &current_line->body[index];
-			if(*ch == ' ' || *ch == '\n' || index == current_line->length){
+			if(*ch == ' ' || *ch == '\n' || *ch == '\t' || index == current_line->length){
 				if(has_word){
 					add_to_dictionary(dictionary, word);
 					memset(word, 0, strlen(word));
@@ -99,6 +99,10 @@ Dictionary* getDictionary(Lines* text){
 				}
 			} else {
 				has_word = 1;
+				if(*ch == '"' || *ch == '\\'){
+					word[word_size] = '\\';
+					word_size++;
+				}
 				word[word_size] = *ch;
 				word_size++;
 			}
