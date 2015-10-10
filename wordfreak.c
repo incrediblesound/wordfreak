@@ -10,17 +10,17 @@ typedef struct String {
 
 typedef struct Lines {
 	unsigned int num_lines;
-	String lines[100000];
+	String lines[1000000];
 } Lines;
 
 typedef struct WordData {
 	int times;
-	char word[1000];
+	char word[800];
 } WordData;
 
 typedef struct Dictionary {
-	short size;
-	WordData words[100000];
+	int size;
+	WordData words[1000000];
 } Dictionary;
 
 // opens the file and fills a Lines struc
@@ -47,7 +47,7 @@ Lines* getLines(char* file){
 // tests to see if a word exists in a dictionary
 // if so, return the index, otherwise return -1
 short dictionary_contains(Dictionary* dict, char* test){
-	short counter = 0;
+	int counter = 0;
 	while(counter < dict->size){
 		char* current_word = dict->words[counter].word;
 		if(!strcmp(current_word, test)){
@@ -110,7 +110,7 @@ Dictionary* getDictionary(Lines* text){
 		}
 		line_count++;
 	}
-	free(text);
+	// free(text);
 	return dictionary;
 }
 
@@ -140,7 +140,7 @@ int main(int num, char **args){
 		Lines* text = getLines(args[1]);
 		Dictionary* dictionary = getDictionary(text);
 		printDictionary(dictionary);
-		free(dictionary);
+		// free(dictionary);
 	}
 	return 0;
 }
