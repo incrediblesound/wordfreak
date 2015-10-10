@@ -31,10 +31,11 @@ Lines* getLines(char* file){
 	Lines* text = malloc(sizeof(Lines));
 	unsigned int counter = 0;
 	while(1){
-		String* new_line = malloc(sizeof(String));
-		fgets(new_line->body, 1000, fp);
-		new_line->length = strlen(new_line->body);
-		text->lines[counter] = *new_line;
+		String new_line;
+		fgets(new_line.body, 1000, fp);
+		new_line.length = strlen(new_line.body);
+		text->lines[counter] = new_line;
+		free(new_line.body);
 		if(feof(fp)){
 			break;
 		}
@@ -66,10 +67,10 @@ void add_to_dictionary(Dictionary* dict, char* word){
 	if(result > -1){
 		dict->words[result].times++;
 	} else {
-		WordData* data = malloc(sizeof(WordData));
-		data->times = 1;
-		strcpy(data->word, word);
-		dict->words[dict->size] = *data;
+		WordData data;
+		data.times = 1;
+		strcpy(data.word, word);
+		dict->words[dict->size] = data;
 		dict->size++;
 	}
 }
@@ -106,6 +107,7 @@ Dictionary* getDictionary(Lines* text){
 		}
 		line_count++;
 	}
+	free(text);
 	return dictionary;
 }
 
@@ -135,6 +137,7 @@ int main(int num, char **args){
 		Lines* text = getLines(args[1]);
 		Dictionary* dictionary = getDictionary(text);
 		printDictionary(dictionary);
+		free(dictionary);
 	}
 	return 0;
 }
