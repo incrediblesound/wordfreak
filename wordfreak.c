@@ -5,22 +5,22 @@
 // structures //
 typedef struct String {
 	size_t length;
-	char body[1000];
+	char body[10000];
 } String;
 
 typedef struct Lines {
 	unsigned int num_lines;
-	String lines[10000];
+	String lines[100000];
 } Lines;
 
 typedef struct WordData {
 	int times;
-	char word[100];
+	char word[1000];
 } WordData;
 
 typedef struct Dictionary {
 	short size;
-	WordData words[10000];
+	WordData words[100000];
 } Dictionary;
 
 // opens the file and fills a Lines struc
@@ -32,10 +32,9 @@ Lines* getLines(char* file){
 	unsigned int counter = 0;
 	while(1){
 		String new_line;
-		fgets(new_line.body, 1000, fp);
+		fgets(new_line.body, 10000, fp);
 		new_line.length = strlen(new_line.body);
 		text->lines[counter] = new_line;
-		free(new_line.body);
 		if(feof(fp)){
 			break;
 		}
@@ -83,7 +82,7 @@ Dictionary* getDictionary(Lines* text){
 	while(line_count < text->num_lines){
 
 		String* current_line = &text->lines[line_count];
-		char word[100] = "";
+		char word[1000] = "";
 		short index = 0;
 		short word_size = 0;
 		short has_word = 0;
